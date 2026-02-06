@@ -1,0 +1,348 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7fa;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 10px 0 0;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.logo {
+    height: 50px;
+}
+
+.container {
+    display: flex;
+    flex: 1;
+    padding: 20px;
+    gap: 20px;
+}
+
+.left-half {
+    flex: 2;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.right-half {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow: hidden;
+}
+
+.top-right {
+    flex: 3;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.bottom-right {
+    flex: 1;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+/*    overflow: scroll;*/
+}
+
+.bottom-right h2 {
+    margin-top: 0;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+#xml-display {
+    max-height: 250px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+}
+
+
+/* Tabs */
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.tablink {
+    background-color: #e0e0e0;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.tablink:hover {
+    background-color: #d0d0d0;
+}
+
+.tablink.active {
+    background-color: #2c3e50;
+    color: white;
+}
+
+.tabcontent {
+    display: none;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.tabcontent.active {
+    display: block;
+}
+
+/* Forms */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form h2 {
+    margin-top: 0;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.form label {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.form input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.form input:focus {
+    border-color: #2c3e50;
+    outline: none;
+}
+
+.form select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 100%;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.form select:focus {
+    border-color: #2c3e50;
+    outline: none;
+}
+
+/* Input Group for Side-by-Side Inputs */
+.input-group {
+    display: flex;
+    gap: 40px; /* Space between the inputs */
+/*    margin-bottom: 10px;*/
+    width: 100%; /* Ensure the container takes full width of its parent */
+}
+
+.horiz-wrapper {
+    flex: 1; /* Each input takes equal space */
+    width: 100%; /* Ensure the container takes full width of its parent */
+    flex-direction: column;
+    
+}
+
+.input-wrapper {
+    flex: 1; /* Each input takes equal space */
+    width: 100%; /* Ensure the container takes full width of its parent */
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+.input-wrapper label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.input-wrapper input:focus {
+    border-color: #2c3e50;
+    outline: none;
+}
+
+/* Error Styling */
+.input-wrapper input.invalid {
+    border-color: #e74c3c; /* Red border for invalid input */
+}
+
+.submit-btn {
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #1a252f;
+}
+
+/* Map */
+.map {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+/* Sensor Popup Styles */
+.ol-popup {
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    min-width: 280px;
+    font-size: 14px;
+    z-index: 1000;
+}
+
+.ol-popup:after, .ol-popup:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.ol-popup:after {
+    border-top-color: white;
+    border-width: 10px;
+    left: 50%;
+    margin-left: -10px;
+}
+
+.ol-popup:before {
+    border-top-color: #cccccc;
+    border-width: 11px;
+    left: 50%;
+    margin-left: -11px;
+}
+
+.sensor-popup h4 {
+    margin-top: 0;
+    color: #2c3e50;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+.sensor-popup p {
+    margin: 5px 0;
+}
+/* Style for the filter bbox */
+.ol-layer.bboxLayer {
+    z-index: -1; /* Make sure it appears above other layers */
+}
+
+
+/* Google Charts Container */
+#google-chart-container {
+  margin: 20px 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Table Styles */
+.table-container {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.sensor-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.sensor-table th {
+  background-color: #2c3e50;
+  color: white;
+  padding: 10px;
+  text-align: left;
+  position: sticky;
+  top: 0;
+}
+
+.sensor-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.sensor-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #google-chart-container {
+    height: 300px;
+  }
+  
+  .sensor-table {
+    font-size: 12px;
+  }
+}
