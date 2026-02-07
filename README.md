@@ -2,7 +2,7 @@
 
 An intelligent web-based dashboard that integrates OGC Web Services (WMS, WFS, SOS) with Generative AI (Gemini 1.5 Flash). Users can visualize geospatial data, fetch sensor readings, and generate maps using natural language commands, eliminating the need to manually configure complex service parameters.
 
-![Dashboard Screenshot](image_19e00b.jpg)
+![Dashboard Screenshot]('Screenshot from 2026-02-07 16-39-51.png')
 
 ## Requirements & Dependencies
 
