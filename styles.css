@@ -1,348 +1,286 @@
-/* General Styles */
+/* --- Global Reset & Typography --- */
 body {
     font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
+    margin: 0; padding: 0;
     background-color: #f4f7fa;
     color: #333;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+    display: flex; flex-direction: column;
+    /* REMOVED: height: 100vh; <-- This was causing the squish */
+    min-height: 100vh; /* Allow it to grow beyond screen size */
 }
 
-header {
-    background-color: #2c3e50;
+/* --- AI Command Bar (Floating) --- */
+.ai-bar-container {
+    background: #ffffff;
+    padding: 15px 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    position: relative;
+    z-index: 1000;
+    border-bottom: 1px solid #eee;
+}
+
+.ai-input-wrapper {
+    position: relative;
+    width: 60%;
+    max-width: 800px;
+    display: flex;
+    align-items: center;
+}
+
+.ai-icon {
+    position: absolute;
+    left: 20px;
+    font-size: 1.2em;
+    pointer-events: none;
+}
+
+#ai-query-input {
+    width: 100%;
+    padding: 14px 14px 14px 50px; /* Space for icon */
+    border: 2px solid #e0e0e0;
+    border-radius: 50px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f9f9;
+}
+
+#ai-query-input:focus {
+    border-color: #7b2cbf;
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(123, 44, 191, 0.1);
+}
+
+.ai-btn {
+    background: linear-gradient(135deg, #7b2cbf, #9d4edd);
     color: white;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-header h1 {
-    margin: 10px 0 0;
-    font-size: 24px;
+    border: none;
+    padding: 12px 30px;
+    margin-left: 15px;
+    border-radius: 50px;
+    cursor: pointer;
     font-weight: 600;
+    font-size: 14px;
+    white-space: nowrap;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.logo {
-    height: 50px;
+.ai-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(123, 44, 191, 0.3);
 }
 
-.container {
-    display: flex;
-    flex: 1;
-    padding: 20px;
-    gap: 20px;
+.ai-status {
+    font-size: 13px;
+    font-weight: 500;
+    color: #666;
+    min-width: 100px;
+    text-align: center;
 }
 
-.left-half {
-    flex: 2;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    overflow-y: auto;
+/* AI Status Modifiers */
+.ai-status.loading { color: #e67e22; animation: pulse 1.5s infinite; }
+.ai-status.success { color: #2ecc71; }
+.ai-status.error { color: #e74c3c; }
+
+@keyframes pulse { 
+    0% { opacity: 0.6; } 
+    50% { opacity: 1; } 
+    100% { opacity: 0.6; } 
 }
 
-.right-half {
-    flex: 3;
+/* --- Header & Layout --- */
+header { 
+    background-color: #2c3e50; 
+    color: white; 
+    padding: 10px; 
+    text-align: center; 
+}
+
+header h1 { 
+    margin: 0; 
+    font-size: 18px; 
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+
+.container { 
+    display: flex; 
+    flex: 1; 
+    padding: 20px; 
+    gap: 20px; 
+    height: auto; 
+    min-height: 600px; 
+    flex-wrap: wrap; 
+}
+
+/* Left Controls Panel */
+.left-half { 
+    flex: 0 0 380px; /* Fixed width */
+    background: white; 
+    border-radius: 12px; 
+    padding: 20px; 
+    overflow-y: auto; 
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    overflow: hidden;
 }
 
-.top-right {
-    flex: 3;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+/* Right Map Panel */
+.right-half { 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px; 
+    min-width: 300px;
 }
 
-.bottom-right {
-    flex: 1;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-/*    overflow: scroll;*/
+.top-right { 
+    flex: none; 
+    height: 500px; 
+    border-radius: 12px; 
+    overflow: hidden; 
+    border: 1px solid #ddd; 
+}
+
+.bottom-right { 
+    flex: 1; 
+    background: white; 
+    border-radius: 12px; 
+    padding: 15px; 
+    overflow-y: auto; 
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
 }
 
 .bottom-right h2 {
     margin-top: 0;
-    font-size: 20px;
-    font-weight: 500;
-}
-
-#xml-display {
-    max-height: 250px;
-    overflow-y: auto;
-    white-space: pre-wrap;
-}
-
-
-/* Tabs */
-.tabs {
-    display: flex;
-    margin-bottom: 20px;
-    gap: 10px;
-}
-
-.tablink {
-    background-color: #e0e0e0;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    flex: 1;
-    text-align: center;
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.tablink:hover {
-    background-color: #d0d0d0;
-}
-
-.tablink.active {
-    background-color: #2c3e50;
-    color: white;
-}
-
-.tabcontent {
-    display: none;
-    padding: 20px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
-
-.tabcontent.active {
-    display: block;
-}
-
-/* Forms */
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.form h2 {
-    margin-top: 0;
-    font-size: 18px;
-    font-weight: 500;
-}
-
-.form label {
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.form input {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-    transition: border-color 0.3s ease;
-}
-
-.form input:focus {
-    border-color: #2c3e50;
-    outline: none;
-}
-
-.form select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-color: white;
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    width: 100%;
-    cursor: pointer;
-    transition: border-color 0.3s ease;
-}
-
-.form select:focus {
-    border-color: #2c3e50;
-    outline: none;
-}
-
-/* Input Group for Side-by-Side Inputs */
-.input-group {
-    display: flex;
-    gap: 40px; /* Space between the inputs */
-/*    margin-bottom: 10px;*/
-    width: 100%; /* Ensure the container takes full width of its parent */
-}
-
-.horiz-wrapper {
-    flex: 1; /* Each input takes equal space */
-    width: 100%; /* Ensure the container takes full width of its parent */
-    flex-direction: column;
-    
-}
-
-.input-wrapper {
-    flex: 1; /* Each input takes equal space */
-    width: 100%; /* Ensure the container takes full width of its parent */
-    flex-direction: row;
-    margin-bottom: 20px;
-}
-
-.input-wrapper label {
-    display: block;
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 5px;
-}
-
-.input-wrapper input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-    transition: border-color 0.3s ease;
-}
-
-.input-wrapper input:focus {
-    border-color: #2c3e50;
-    outline: none;
-}
-
-/* Error Styling */
-.input-wrapper input.invalid {
-    border-color: #e74c3c; /* Red border for invalid input */
-}
-
-.submit-btn {
-    background-color: #2c3e50;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: background-color 0.3s ease;
-}
-
-.submit-btn:hover {
-    background-color: #1a252f;
-}
-
-/* Map */
-.map {
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-}
-
-/* Sensor Popup Styles */
-.ol-popup {
-    position: absolute;
-    background-color: white;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #cccccc;
-    min-width: 280px;
-    font-size: 14px;
-    z-index: 1000;
-}
-
-.ol-popup:after, .ol-popup:before {
-    top: 100%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-}
-
-.ol-popup:after {
-    border-top-color: white;
-    border-width: 10px;
-    left: 50%;
-    margin-left: -10px;
-}
-
-.ol-popup:before {
-    border-top-color: #cccccc;
-    border-width: 11px;
-    left: 50%;
-    margin-left: -11px;
-}
-
-.sensor-popup h4 {
-    margin-top: 0;
+    font-size: 16px;
     color: #2c3e50;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 5px;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
 }
 
-.sensor-popup p {
-    margin: 5px 0;
-}
-/* Style for the filter bbox */
-.ol-layer.bboxLayer {
-    z-index: -1; /* Make sure it appears above other layers */
-}
-
-
-/* Google Charts Container */
-#google-chart-container {
-  margin: 20px 0;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  overflow: hidden;
+#xml-display { 
+    font-size: 12px; 
+    color: #555; 
+    white-space: pre-wrap; 
+    word-wrap: break-word; 
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
 }
 
-/* Table Styles */
-.table-container {
-  max-height: 300px;
-  overflow-y: auto;
-  margin-top: 20px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+/* --- Tabs --- */
+.tabs { 
+    display: flex; 
+    margin-bottom: 20px; 
+    border-bottom: 2px solid #eee; 
 }
 
-.sensor-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
+.tablink { 
+    flex: 1; 
+    background: none; 
+    border: none; 
+    padding: 12px; 
+    cursor: pointer; 
+    font-weight: 600; 
+    color: #95a5a6; 
+    border-bottom: 3px solid transparent; 
+    transition: all 0.3s;
 }
 
-.sensor-table th {
-  background-color: #2c3e50;
-  color: white;
-  padding: 10px;
-  text-align: left;
-  position: sticky;
-  top: 0;
+.tablink:hover { color: #2c3e50; background: #f9f9f9; }
+.tablink.active { color: #2c3e50; border-bottom-color: #2c3e50; }
+.tabcontent { display: none; animation: fadeIn 0.3s; }
+
+/* --- Forms & Inputs --- */
+.form label { 
+    font-size: 13px; 
+    font-weight: 600; 
+    color: #34495e; 
+    margin-top: 15px; 
+    display: block; 
 }
 
-.sensor-table td {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+.form input, .form select { 
+    width: 100%; 
+    padding: 10px; 
+    margin-top: 5px; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    box-sizing: border-box; 
+    font-size: 14px;
 }
 
-.sensor-table tr:nth-child(even) {
-  background-color: #f9f9f9;
+.form input:focus, .form select:focus {
+    border-color: #2c3e50;
+    outline: none;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  #google-chart-container {
+.input-group { 
+    display: flex; 
+    gap: 15px; 
+    margin-top: 5px; 
+}
+
+.input-wrapper { flex: 1; }
+.horiz-wrapper { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+
+/* --- Buttons --- */
+.submit-btn { 
+    width: 100%; 
+    padding: 12px; 
+    margin-top: 25px; 
+    border: none; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    font-weight: 600; 
+    letter-spacing: 0.5px;
+    transition: background 0.3s;
+}
+
+.action-btn { background-color: #3498db; color: white; }
+.action-btn:hover { background-color: #2980b9; }
+
+.primary-btn { background-color: #27ae60; color: white; }
+.primary-btn:hover { background-color: #219150; }
+
+/* --- Map & Charts --- */
+.map { width: 100%; height: 100%; }
+
+#sensor-results {
+    display: none; /* Hidden by default */
+    padding: 30px;
+    background: white;
+    margin: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.empty-graph-placeholder {
+    width: 100%;
     height: 300px;
-  }
-  
-  .sensor-table {
-    font-size: 12px;
-  }
+    background-color: #f8f9fa;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    font-weight: 500;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Mobile Responsiveness */
+@media (max-width: 900px) {
+    .container { flex-direction: column; height: auto; }
+    .left-half, .right-half { flex: none; width: 100%; box-sizing: border-box; }
+    .ai-bar-container { flex-direction: column; }
+    .ai-input-wrapper { width: 100%; }
 }

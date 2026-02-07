@@ -3,262 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Map Website</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>AI-Driven Geospatial Dashboard</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol/ol.css" type="text/css">
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    
+    <div class="ai-bar-container">
+        <div class="ai-input-wrapper">
+            <span class="ai-icon">✨</span>
+            <input type="text" id="ai-query-input" placeholder="Ask AI (e.g., 'Show me vegetation density in India')..." autocomplete="off">
+            <button id="ai-submit-btn" class="ai-btn">Generate Map</button>
+        </div>
+        <div id="ai-status" class="ai-status">Ready</div>
+    </div>
+
     <header>
-<!--        <img src="logo.png" alt="Website Logo" class="logo">-->
         <h1>Interactive Map Dashboard</h1>
     </header>
+
     <div class="container">
-        <div class="left-half" id="A">
+        <div class="left-half" id="controls-panel">
             <div class="tabs">
                 <button class="tablink active" onclick="openTab(event, 'Tab1')">WMS</button>
                 <button class="tablink" onclick="openTab(event, 'Tab2')">WFS</button>
                 <button class="tablink" onclick="openTab(event, 'Tab3')">SOS</button>
             </div>
-            <div id="Tab1" class="tabcontent">
-                <form class="form">
-<!--                    <h2>Form 1</h2>-->
 
-                    <label for="field1">Server URL :</label>
+            <div id="Tab1" class="tabcontent" style="display:block;">
+                <form class="form">
+                    <label for="field1">Server URL:</label>
                     <input type="text" id="field1" name="field1" placeholder="http://127.0.0.1:8080/geoserver">
                     
-                    <button id="wms-getcapabilities" class="submit-btn" type="button">GetCapabilities</button>
+                    <button id="wms-getcapabilities" class="submit-btn action-btn" type="button">GetCapabilities</button>
                     
-                    <label for="dropdown">Layer :</label>
-			        <select id="layer-dropdown" name="layer-dropdown">
-			        	<option disabled selected></option>
-			            <option value="" disabled>Click on GetCapabilities</option>
-			        </select>
-			        
-			        <label for="dropdown">CRS :</label>
-			        <select id="crs-dropdown" name="crs-dropdown">
-			            <option disabled selected></option>
-			            <option value="" disabled>Click on GetCapabilities</option>
-			        </select>
-			        
-			        <label for="dropdown">Output Format :</label>
-			        <select id="format-dropdown" name="format-dropdown">
-			            <option disabled selected></option>
-			            <option value="" disabled>Click on GetCapabilities</option>
-			        </select>
-			        
-			        <div class="input-group">
-			            <div class="input-wrapper">
-			                <label for="number1">Height :</label>
-			                <input type="text" id="number1" name="number1" placeholder="Enter a number" oninput="validateNumber(this)">
-			            </div>
-			            <div class="input-wrapper">
-			                <label for="number2">Width :</label>
-			                <input type="text" id="number2" name="number2" placeholder="Enter a number" oninput="validateNumber(this)">
-			            </div>
-			        </div>
-			        
-			        <label for="input-group">Bounding Box :</label>
-			        
-			        <div class="input-group">
-			        	<div class="horiz-wrapper">
-				            <div class="input-wrapper">
-				                <label for="number11">min x :</label>
-				                <input type="text" id="number11" name="number11" placeholder="Enter a number" oninput="validateNumber(this)">
-				            </div>
-				            <div class="input-wrapper">
-				                <label for="number22">max x :</label>
-				                <input type="text" id="number22" name="number22" placeholder="Enter a number" oninput="validateNumber(this)">
-				            </div>
-				        </div>
-				        <div class="horiz-wrapper">
-				            <div class="input-wrapper">
-				                <label for="number111">min y :</label>
-				                <input type="text" id="number111" name="number111" placeholder="Enter a number" oninput="validateNumber(this)">
-				            </div>
-				            <div class="input-wrapper">
-				                <label for="number222">max y :</label>
-				                <input type="text" id="number222" name="number222" placeholder="Enter a number" oninput="validateNumber(this)">
-				            </div>
-				        </div>
-			        </div>
-
-			        
-                    <button id="wms-submit" type="button" class="submit-btn">Submit</button>
-                    
-                </form>
-            </div>
-            <div id="Tab2" class="tabcontent">
-                <form class="form">
-                    <label for="field1_f">Server URL :</label>
-                    <input type="text" id="field1_f" name="field1_f" placeholder="http://127.0.0.1:8080/geoserver">
-                    
-                    <button id="wfs-getcapabilities" class="submit-btn" type="button">GetCapabilities</button>
-                    
-                    <label for="layer_dropdown_f">Layer :</label>
-                    <select id="layer_dropdown_f" name="layer-dropdown_f">
-                        <option disabled selected></option>
-                        <option value="" disabled>Click on GetCapabilities</option>
+                    <label for="layer-dropdown">Layer:</label>
+                    <select id="layer-dropdown" name="layer-dropdown">
+                        <option disabled selected value="">Select a layer</option>
                     </select>
                     
-                    <label for="crs_dropdown_f">CRS :</label>
-                    <select id="crs_dropdown_f" name="crs-dropdown_f">
-                        <option disabled selected></option>
-                        <option value="" disabled>Click on GetCapabilities</option>
+                    <label for="crs-dropdown">CRS:</label>
+                    <select id="crs-dropdown" name="crs-dropdown">
+                        <option disabled selected value="">Select CRS</option>
                     </select>
                     
-                    <label for="format_dropdown_f">Output Format :</label>
-                    <select id="format_dropdown_f" name="format-dropdown_f">
-                        <option disabled selected></option>
-                        <option value="" disabled>Click on GetCapabilities</option>
+                    <label for="format-dropdown">Output Format:</label>
+                    <select id="format-dropdown" name="format-dropdown">
+                        <option disabled selected value="">Select Format</option>
                     </select>
                     
+                    <div class="input-group">
+                        <div class="input-wrapper">
+                            <label for="number1">Height:</label>
+                            <input type="text" id="number1" name="number1" placeholder="600" value="600">
+                        </div>
+                        <div class="input-wrapper">
+                            <label for="number2">Width:</label>
+                            <input type="text" id="number2" name="number2" placeholder="800" value="800">
+                        </div>
+                    </div>
                     
-                    <label for="input-group">Bounding Box :</label>
-                    
+                    <label>Bounding Box (BBOX):</label>
                     <div class="input-group">
                         <div class="horiz-wrapper">
                             <div class="input-wrapper">
-                                <label for="number11_f">min x :</label>
-                                <input type="text" id="number11_f" name="number11_f" placeholder="Enter a number" oninput="validateNumber(this)">
+                                <label for="number11">Min X (Lon):</label>
+                                <input type="text" id="number11" name="number11">
                             </div>
                             <div class="input-wrapper">
-                                <label for="number22_f">max x :</label>
-                                <input type="text" id="number22_f" name="number22_f" placeholder="Enter a number" oninput="validateNumber(this)">
+                                <label for="number22">Max X (Lon):</label>
+                                <input type="text" id="number22" name="number22">
                             </div>
                         </div>
                         <div class="horiz-wrapper">
                             <div class="input-wrapper">
-                                <label for="number111_f">min y :</label>
-                                <input type="text" id="number111_f" name="number111_f" placeholder="Enter a number" oninput="validateNumber(this)">
+                                <label for="number111">Min Y (Lat):</label>
+                                <input type="text" id="number111" name="number111">
                             </div>
                             <div class="input-wrapper">
-                                <label for="number222_f">max y :</label>
-                                <input type="text" id="number222_f" name="number222_f" placeholder="Enter a number" oninput="validateNumber(this)">
+                                <label for="number222">Max Y (Lat):</label>
+                                <input type="text" id="number222" name="number222">
                             </div>
                         </div>
                     </div>
+                    <button id="wms-submit" type="button" class="submit-btn primary-btn">Submit WMS</button>
+                </form>
+            </div>
 
-
-                    <label for="field_feature_f">Feature Id :</label>
-                    <input type="number" id="field_feature_f" name="field_feature_f">
-
+            <div id="Tab2" class="tabcontent">
+                <form class="form">
+                    <label for="field1_f">Server URL:</label>
+                    <input type="text" id="field1_f" name="field1_f" placeholder="http://127.0.0.1:8080/geoserver">
                     
-                    <button id="wfs-submit" type="button" class="submit-btn">Submit</button>
+                    <button id="wfs-getcapabilities" class="submit-btn action-btn" type="button">GetCapabilities</button>
+                    
+                    <label for="layer_dropdown_f">Feature Type:</label>
+                    <select id="layer_dropdown_f" name="layer-dropdown_f">
+                        <option disabled selected value="">Select Feature</option>
+                    </select>
+                    
+                    <label for="crs_dropdown_f">CRS:</label>
+                    <select id="crs_dropdown_f" name="crs-dropdown_f">
+                         <option disabled selected value="">Select CRS</option>
+                    </select>
+                    
+                    <label for="format_dropdown_f">Output Format:</label>
+                    <select id="format_dropdown_f" name="format-dropdown_f">
+                         <option disabled selected value="">Select Format</option>
+                    </select>
+                    
+                    <label>Bounding Box:</label>
+                    <div class="input-group">
+                        <div class="horiz-wrapper">
+                            <div class="input-wrapper">
+                                <label for="number11_f">Min X:</label>
+                                <input type="text" id="number11_f">
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="number22_f">Max X:</label>
+                                <input type="text" id="number22_f">
+                            </div>
+                        </div>
+                        <div class="horiz-wrapper">
+                            <div class="input-wrapper">
+                                <label for="number111_f">Min Y:</label>
+                                <input type="text" id="number111_f">
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="number222_f">Max Y:</label>
+                                <input type="text" id="number222_f">
+                            </div>
+                        </div>
+                    </div>
+                    <label for="field_feature_f">Feature Id (Optional):</label>
+                    <input type="number" id="field_feature_f" name="field_feature_f">
+                    
+                    <button id="wfs-submit" type="button" class="submit-btn primary-btn">Submit WFS</button>
                 </form>
             </div>
             
             <div id="Tab3" class="tabcontent">
                 <form class="form">
-                    <label for="field1_s">Server URL :</label>
+                    <label for="field1_s">Server URL:</label>
                     <input type="text" id="field1_s" name="field1_s" placeholder="http://localhost/istsos">
                     
-                    <button id="sos-getcapabilities" class="submit-btn" type="button">GetCapabilities</button>
+                    <button id="sos-getcapabilities" class="submit-btn action-btn" type="button">GetCapabilities</button>
                     
-                    <label for="input-group">Bounding Box :</label>
+                    <label for="layer_dropdown_s">Sensor:</label>
+                    <select id="layer_dropdown_s" name="layer-dropdown_s">
+                        <option disabled selected value="">Select Sensor</option>
+                    </select>
                     
+                    <label>Time Window:</label>
                     <div class="input-group">
                         <div class="horiz-wrapper">
                             <div class="input-wrapper">
-                                <label for="number11_s">min x :</label>
-                                <input type="text" id="number11_s" name="number11_s" placeholder="Enter a number" oninput="validateNumber(this)">
+                                <label for="number1_s">Start Date:</label>
+                                <input type="date" id="number1_s">
                             </div>
                             <div class="input-wrapper">
-                                <label for="number22_f">max x :</label>
-                                <input type="text" id="number22_s" name="number22_s" placeholder="Enter a number" oninput="validateNumber(this)">
+                                <label for="number2_s">End Date:</label>
+                                <input type="date" id="number2_s">
                             </div>
                         </div>
                         <div class="horiz-wrapper">
                             <div class="input-wrapper">
-                                <label for="number111_f">min y :</label>
-                                <input type="text" id="number111_s" name="number111_s" placeholder="Enter a number" oninput="validateNumber(this)">
+                                <label for="number10_s">Start Time:</label>
+                                <input type="time" id="number10_s">
                             </div>
                             <div class="input-wrapper">
-                                <label for="number222_f">max y :</label>
-                                <input type="text" id="number222_s" name="number222_s" placeholder="Enter a number" oninput="validateNumber(this)">
+                                <label for="number20_s">End Time:</label>
+                                <input type="time" id="number20_s">
                             </div>
                         </div>
                     </div>
-					
-					<button id="sos-filter" class="submit-btn" type="button">Filter</button>
-                    
-                    <label for="layer_dropdown_s">Sensor :</label>
-                    <select id="layer_dropdown_s" name="layer-dropdown_s">
-                        <option disabled selected></option>
-                        <option value="" disabled>Click on GetCapabilities</option>
-                    </select>
-                    
-                    
-                                        
-                    <label for="input-group">Time Window :</label>
-                    
-                    <div class="input-group">
-					    <div class="horiz-wrapper">
-					        <div class="input-wrapper">
-					            <label for="number1_s">start date :</label>
-					            <input type="date" id="number1_s" name="number1_s">
-					        </div>
-					        <div class="input-wrapper">
-					            <label for="number2_s">end date :</label>
-					            <input type="date" id="number2_s" name="number2_s">
-					        </div>
-					    </div>
-					    <div class="horiz-wrapper">
-					        <div class="input-wrapper">
-					            <label for="number10_s">start time :</label>
-					            <input type="time" id="number10_s" name="number10_s">
-					        </div>
-					        <div class="input-wrapper">
-					            <label for="number20_s">end time :</label>
-					            <input type="time" id="number20_s" name="number20_s">
-					        </div>
-					    </div>
-					</div>
-
-                    
-                    <button id="sos-submit" type="button" class="submit-btn">Submit</button>
+                    <button id="sos-submit" type="button" class="submit-btn primary-btn">Submit SOS</button>
                 </form>
             </div>
-
-            
         </div>
+
         <div class="right-half">
-            <div class="top-right" id="tB">
+            <div class="top-right" id="map-container">
                 <div id="map" class="map"></div>
             </div>
-            <div class="bottom-right" id="bB">
-                <h2>XML Document</h2>
+            <div class="bottom-right" id="output-panel">
+                <h2>Server Response (XML/JSON)</h2>
                 <pre id="xml-display"></pre>
             </div>
         </div>
     </div>
     
-        <!-- Sensor Results Container -->
-    <!-- Results Container -->
-<div id="sensor-results" class="sensor-results">
-  <div id="google-chart-container" style="width:100%; height:400px;"></div>
-  <div id="sensor-data-table"></div>
-</div>
+    <div id="sensor-results" class="sensor-results">
+        <h3>Sensor Data Visualization</h3>
+        
+        <div id="empty-state" class="empty-graph-placeholder">
+            Select a sensor and click Submit to view data
+        </div>
 
-<!-- Load Google Charts -->
-<script src="https://www.gstatic.com/charts/loader.js"></script>
-    
+        <div id="google-chart-container" style="width:100%; height:400px; display:none;"></div>
+        
+        <div id="sensor-data-table"></div>
+    </div>
+
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/ol/dist/ol.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.5/proj4.js"></script>
-    <script src="script.js"></script>
-    <script src="script2.js"></script>
-    
-    
     
     <script src="vkbeautify.js"></script>
+    
     <script>
-        // Initialize OpenLayers map
         var map = new ol.Map({
             target: 'map',
             layers: [
                 new ol.layer.Tile({
-                    source: new ol.source.OSM({
-                attributions: [] // Remove all attributions
-            })
+                    source: new ol.source.OSM()
                 })
             ],
             view: new ol.View({
@@ -267,6 +229,11 @@
             })
         });
     </script>
+
+    <script src="script.js"></script>
+    <script src="script2.js"></script>
     <script src="script3.js"></script>
+    
+    <script src="llm_controller.js"></script>
 </body>
 </html>
