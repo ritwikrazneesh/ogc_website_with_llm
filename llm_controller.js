@@ -3,7 +3,7 @@
 
 // --- 1. CONFIGURATION ---
 // REPLACE THIS WITH YOUR ACTUAL API KEY
-const GEMINI_API_KEY = "AIzaSyAilB1zngbBqF9sSMmYHwdX9iM7mXcquRY"; 
+const GEMINI_API_KEY = "API_KEY"; 
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
 
 const appConfig = {
